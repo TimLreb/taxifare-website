@@ -44,50 +44,133 @@ html, body { height: 100%; width: 100%; font-family: 'Syne', sans-serif;
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
+
+  /* Layout: map on top (70%), bottom sheet below (30%) */
   #app {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr auto;
     height: 100dvh;
+    overflow: hidden;
   }
+
+  /* Map goes first (order 1) */
+  #map-wrap { order: 1; min-height: 0; }
+  #map      { height: 100%; }
+
+  /* Panel is a bottom sheet (order 2) */
   #panel {
-    padding: 0.9rem 1rem 0.8rem;
-    max-height: 30dvh;
+    order: 2;
+    padding: 0.75rem 1rem 0.7rem;
     border-right: none;
-    border-bottom: 1px solid var(--border);
-    overflow-y: auto;
+    border-top: 1px solid var(--border);
+    overflow: hidden;          /* NO scroll */
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: auto;
   }
-  .tagline { display: none; }
-  .brand { font-size: 1.3rem; margin-bottom: 0.6rem; }
-  .divider { margin: 0.5rem 0; }
-  .spacer { display: none; }
-  .lbl { font-size: 0.6rem; margin-bottom: 0.35rem; margin-top: 0; }
-  .click-mode-bar { gap: 0.4rem; margin-bottom: 0.5rem; }
-  .mode-btn { font-size: 0.68rem; padding: 0.38rem 0.5rem; }
-  .mode-hint { font-size: 0.62rem; margin-bottom: 0.5rem; }
-  .loc-block { gap: 0.55rem; }
-  .loc-dot { width: 9px; height: 9px; }
-  .loc-connector { min-height: 24px; }
-  .field input[type=text] { font-size: 0.85rem; padding: 0.48rem 0.7rem; border-radius: 8px; }
-  .coord-chip { font-size: 0.63rem; margin-top: 0.2rem; }
-  .row2 { gap: 0.45rem; margin-bottom: 0; }
-  .row2 input[type=date], .row2 input[type=time] { font-size: 0.82rem; padding: 0.45rem 0.6rem; border-radius: 8px; }
-  .mini-lbl { font-size: 0.58rem; margin-bottom: 0.25rem; }
-  .slider-row { gap: 0.55rem; }
-  input[type=range]::-webkit-slider-thumb { width: 15px; height: 15px; }
-  .pax-val { font-size: 0.9rem; }
-  #btn { font-size: 0.88rem; padding: 0.65rem; border-radius: 8px; margin-top: 0.6rem; }
-  #result { margin-top: 0.6rem; border-radius: 10px; }
-  .fare-hero { padding: 0.7rem 0.9rem 0.6rem; }
-  .fare-amt { font-size: 2rem; }
-  .fare-note { font-size: 0.62rem; }
-  .fare-taxi { font-size: 1.5rem; }
-  .stat-cell { padding: 0.55rem 0.8rem; }
-  .stat-val { font-size: 0.88rem; }
-  .stat-lbl { font-size: 0.57rem; }
-  .time-row { padding: 0.55rem 0.8rem; }
-  .time-val { font-size: 0.9rem; }
-  .time-lbl { font-size: 0.57rem; }
-  #map-hint { bottom: 0.8rem; font-size: 0.7rem; padding: 0.4rem 0.9rem; }
+
+  /* Hide everything non-essential */
+  .tagline  { display: none; }
+  .divider  { display: none; }
+  .spacer   { display: none; }
+  .coord-chip { display: none; }
+  .mode-hint  { display: none; }
+  .lbl        { display: none; }
+
+  /* Brand tiny */
+  .brand { font-size: 1.1rem; margin-bottom: 0.5rem; }
+
+  /* Click mode buttons — compact row */
+  .click-mode-bar {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.4rem; margin-bottom: 0.5rem;
+  }
+  .mode-btn { font-size: 0.68rem; padding: 0.38rem 0.4rem; border-radius: 7px; }
+
+  /* Address inputs side by side */
+  .loc-block { flex-direction: row; gap: 0.4rem; margin-bottom: 0.5rem; align-items: stretch; }
+  .loc-dot-wrap { display: none; }
+  .loc-inputs {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;
+    flex: 1;
+  }
+  /* hide the coord chips (already hidden globally) and spacing between inputs */
+  .loc-inputs .coord-chip { display: none; }
+  .field { margin: 0 !important; }
+  .field input[type=text] {
+    font-size: 0.8rem; padding: 0.45rem 0.6rem; border-radius: 7px;
+  }
+
+  /* Date + time + passengers on one row */
+  .when-pax-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .row2 { display: contents; } /* dissolve into when-pax-row */
+  .row2 > div { display: contents; }
+  .mini-lbl { display: none; }
+  .row2 input[type=date], .row2 input[type=time] {
+    font-size: 0.78rem; padding: 0.42rem 0.5rem; border-radius: 7px;
+  }
+  .slider-wrap-mobile {
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .slider-wrap-mobile .pax-label {
+    font-size: 0.65rem; color: var(--muted); font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+  }
+  input[type=range] { height: 3px; }
+  input[type=range]::-webkit-slider-thumb { width: 14px; height: 14px; }
+  .pax-val { font-size: 0.85rem; min-width: 1rem; }
+
+  /* Predict button */
+  #btn { font-size: 0.85rem; padding: 0.6rem; border-radius: 8px; margin-bottom: 0; }
+
+  /* Result card — horizontal compact strip */
+  #result {
+    margin-top: 0.45rem;
+    border-radius: 9px;
+    display: none;
+  }
+  #result.on { display: block; }
+  .fare-hero {
+    padding: 0.5rem 0.8rem;
+    border-bottom: none;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto auto;
+    align-items: center;
+    gap: 0 0.8rem;
+  }
+  .fare-lbl { display: none; }
+  .fare-note { display: none; }
+  .fare-taxi { display: none; }
+  .fare-amt { font-size: 1.6rem; white-space: nowrap; }
+
+  /* Hide full stats grid, show inline stats */
+  .stats-grid { display: none; }
+  .time-row {
+    padding: 0 0.8rem 0.5rem;
+    display: flex; gap: 1rem; justify-content: flex-start; align-items: center;
+  }
+  .time-arrow { margin: 0 0.2rem; }
+  .time-lbl { font-size: 0.55rem; }
+  .time-val { font-size: 0.85rem; }
+
+  /* Inline stats next to fare */
+  .mobile-stats {
+    display: flex; gap: 1rem; align-items: center;
+    padding: 0 0.8rem 0.5rem;
+  }
+  .mobile-stat { display: flex; flex-direction: column; }
+  .mobile-stat-lbl { font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .mobile-stat-val { font-family: 'Syne Mono', monospace; font-size: 0.85rem; font-weight: 600; color: var(--text); }
+  .mobile-stat-val.accent { color: var(--accent); }
+
+  #map-hint { bottom: 35%; font-size: 0.7rem; padding: 0.4rem 0.9rem; }
+  #err { font-size: 0.75rem; padding: 0.5rem 0.7rem; margin-top: 0.4rem; }
 }
 
 /* ── Panel ── */
@@ -402,7 +485,6 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
       <input type="range" id="pax" min="1" max="8" value="1"/>
       <div class="pax-val" id="pax-val">1</div>
     </div>
-
     <div class="spacer"></div>
 
     <button id="btn" onclick="predict()">Predict Fare →</button>
@@ -435,6 +517,17 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
         <div class="time-item">
           <div class="time-lbl">Arrival</div>
           <div class="time-val" id="t-arrive">—</div>
+        </div>
+      </div>
+      <!-- mobile-only inline stats -->
+      <div class="mobile-stats">
+        <div class="mobile-stat">
+          <span class="mobile-stat-lbl">Distance</span>
+          <span class="mobile-stat-val accent" id="m-dist">—</span>
+        </div>
+        <div class="mobile-stat">
+          <span class="mobile-stat-lbl">Duration</span>
+          <span class="mobile-stat-val" id="m-dur">—</span>
         </div>
       </div>
     </div>
@@ -730,6 +823,8 @@ async function predict(){
       document.getElementById('stat-dur').textContent=fmtDur(routeData.duration);
       document.getElementById('t-depart').textContent=fmtTime(dep);
       document.getElementById('t-arrive').textContent=fmtTime(arr);
+      document.getElementById('m-dist').textContent=fmtDist(routeData.distance);
+      document.getElementById('m-dur').textContent=fmtDur(routeData.duration);
       document.getElementById('result').classList.add('on');
     });
   }catch(e){
