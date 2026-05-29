@@ -309,15 +309,15 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
 
   #app {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 45dvh 1fr;
     height: 100dvh;
     overflow: hidden;
   }
 
-  /* Map top, panel bottom */
-  #map-wrap { order: 1; overflow: hidden; flex: 1; min-height: 0; }
-  #map      { height: 100%; }
-  #panel    { order: 2; flex-shrink: 0; }
+  /* Map top fixed height, panel takes the rest */
+  #map-wrap { order: 1; overflow: hidden; height: 45dvh; }
+  #map      { height: 45dvh; }
+  #panel    { order: 2; height: 55dvh; overflow: hidden; }
 
   /* Show expand button */
   #map-expand-btn { display: block; }
@@ -403,7 +403,7 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
   .mob-stat-val { font-family: 'Syne Mono', monospace; font-size: .82rem; font-weight: 600; }
   .mob-stat-val.accent { color: var(--accent); }
 
-  #map-hint { bottom: 32%; font-size: .68rem; padding: .38rem .85rem; }
+  #map-hint { bottom: 1rem; font-size: .68rem; padding: .38rem .85rem; }
   #err { font-size: .73rem; padding: .45rem .65rem; margin-top: .35rem; }
 }
 </style>
@@ -645,7 +645,7 @@ function drawRoute(coords) {
   const line=L.polyline(coords,{color:'#f7c948',weight:3.5,opacity:.92}).addTo(map);
   routeLayers.push(glow,line);
   // Fit with extra bottom padding on mobile (panel covers bottom ~30%)
-  const pad = isMobile() ? [20, 20, window.innerHeight*0.35, 20] : [70,70];
+  const pad = isMobile() ? [20, 20, 20, 20] : [70,70];
   map.fitBounds(line.getBounds(), {padding: pad});
 }
 
