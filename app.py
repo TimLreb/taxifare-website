@@ -217,7 +217,7 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
 #err.on { display: block; }
 
 /* ── Map cursor states ── */
-#map-wrap { position: relative; }
+#map-wrap { position: relative; overflow: hidden; }
 #map { width: 100%; height: 100vh; }
 #map.cursor-pu  { cursor: crosshair; }
 #map.cursor-do  { cursor: crosshair; }
@@ -428,6 +428,7 @@ let clickMode = null; // 'pu' | 'do' | null
 // ── Map ────────────────────────────────────────────────────────────────────
 const map = L.map('map',{zoomControl:false}).setView([40.75,-73.97],12);
 L.control.zoom({position:'bottomright'}).addTo(map);
+map.on('zoomend moveend', () => map.invalidateSize());
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
   attribution:'© OpenStreetMap © CARTO', maxZoom:19
 }).addTo(map);
