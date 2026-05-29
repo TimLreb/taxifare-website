@@ -42,6 +42,51 @@ html, body { height: 100%; width: 100%; font-family: 'Syne', sans-serif;
 
 #app { display: grid; grid-template-columns: 520px 1fr; height: 100vh; }
 
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100dvh;
+  }
+  #panel {
+    padding: 1.1rem 1.1rem 1rem;
+    max-height: 55dvh;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  #map-wrap { min-height: 0; }
+  #map { height: 100%; min-height: 200px; }
+  .brand { font-size: 1.4rem; }
+  .tagline { font-size: 0.62rem; margin-bottom: 0.9rem; }
+  .lbl { font-size: 0.62rem; margin-bottom: 0.45rem; }
+  .click-mode-bar { gap: 0.4rem; margin-bottom: 0.7rem; }
+  .mode-btn { font-size: 0.7rem; padding: 0.42rem 0.5rem; }
+  .mode-hint { font-size: 0.64rem; margin-bottom: 0.55rem; }
+  .loc-block { gap: 0.6rem; }
+  .loc-dot { width: 10px; height: 10px; }
+  .field input[type=text] { font-size: 0.88rem; padding: 0.55rem 0.75rem; }
+  .coord-chip { font-size: 0.66rem; }
+  .row2 { gap: 0.5rem; margin-bottom: 0.7rem; }
+  .row2 input[type=date], .row2 input[type=time] { font-size: 0.85rem; padding: 0.5rem 0.65rem; }
+  .mini-lbl { font-size: 0.6rem; }
+  .slider-row { gap: 0.6rem; }
+  .pax-val { font-size: 0.95rem; }
+  #btn { font-size: 0.9rem; padding: 0.72rem; border-radius: 9px; }
+  .divider { margin: 0.8rem 0; }
+  .spacer { min-height: 0.5rem; }
+  #result { margin-top: 0.8rem; }
+  .fare-hero { padding: 0.85rem 1rem 0.75rem; }
+  .fare-amt { font-size: 2.3rem; }
+  .fare-note { font-size: 0.65rem; }
+  .fare-taxi { font-size: 1.7rem; }
+  .stat-cell { padding: 0.65rem 0.9rem; }
+  .stat-val { font-size: 0.9rem; }
+  .time-row { padding: 0.65rem 0.9rem; }
+  .time-val { font-size: 0.95rem; }
+  #map-hint { bottom: 1rem; font-size: 0.72rem; }
+}
+
 /* ── Panel ── */
 #panel {
   background: var(--surface);
@@ -698,4 +743,4 @@ function showErr(msg){
 </script>
 </body>
 </html>
-""", height=860, scrolling=False)
+""", height=900, scrolling=False)
