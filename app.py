@@ -25,15 +25,15 @@ components.html("""
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:      #0b0b10;
-  --surface: #111118;
-  --sur2:    #16161f;
-  --border:  #21212e;
+  --bg:      #13131f;
+  --surface: #1a1a28;
+  --sur2:    #20202f;
+  --border:  #2a2a3d;
   --accent:  #f7c948;
   --orange:  #ff6b35;
   --green:   #5ddb8e;
   --text:    #eceaf4;
-  --muted:   #52506a;
+  --muted:   #6b6885;
 }
 
 html, body {
@@ -198,14 +198,15 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
 
 /* ── Map wrap ── */
 #map-wrap { position: relative; overflow: hidden; }
-#map { width: 100%; height: 100vh; }
+#map { width: 100%; height: 100%; min-height: 0; }
+#map-wrap:not(.fullscreen) #map { height: 100vh; }
 #map.cursor-pu { cursor: crosshair; }
 #map.cursor-do { cursor: crosshair; }
 
 /* map click hint */
 #map-hint {
   position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-  background: rgba(11,11,16,.85); backdrop-filter: blur(8px);
+  background: rgba(20,20,35,.88); backdrop-filter: blur(8px);
   border: 1px solid var(--border); border-radius: 50px;
   padding: .5rem 1.2rem; font-size: .78rem; color: var(--text);
   pointer-events: none; white-space: nowrap;
@@ -221,7 +222,7 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
 #map-expand-btn {
   display: none; /* shown only on mobile */
   position: absolute; top: .75rem; right: .75rem; z-index: 600;
-  background: rgba(11,11,16,.85); backdrop-filter: blur(6px);
+  background: rgba(20,20,35,.88); backdrop-filter: blur(6px);
   border: 1px solid var(--border); border-radius: 8px;
   padding: .45rem .65rem; cursor: pointer;
   font-size: .72rem; font-family: 'Syne', sans-serif; font-weight: 700;
@@ -233,7 +234,7 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
 #map-close-btn {
   display: none; /* shown in fullscreen mode */
   position: absolute; top: .75rem; right: .75rem; z-index: 600;
-  background: rgba(11,11,16,.9); backdrop-filter: blur(6px);
+  background: rgba(20,20,35,.95); backdrop-filter: blur(6px);
   border: 1px solid var(--border); border-radius: 50%;
   width: 38px; height: 38px; cursor: pointer;
   font-size: 1.1rem; color: var(--text);
@@ -259,7 +260,7 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
 ════════════════════════════════════════════ */
 #rocket-wrap {
   position: absolute; inset: 0;
-  background: rgba(8,8,14,.85); backdrop-filter: blur(10px);
+  background: rgba(16,16,26,.88); backdrop-filter: blur(10px);
   display: none; flex-direction: column;
   align-items: center; justify-content: center; z-index: 2000;
   overflow: hidden;
@@ -295,7 +296,7 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
 
 /* Leaflet */
 .leaflet-tooltip { font-family:'Syne',sans-serif; font-size:.74rem; font-weight:600;
-  background:#111118; border:1px solid #21212e; color:#eceaf4;
+  background:#1a1a28; border:1px solid #2a2a3d; color:#eceaf4;
   box-shadow:0 4px 12px rgba(0,0,0,.4); border-radius:6px; }
 .leaflet-tooltip::before { display:none; }
 
@@ -314,9 +315,9 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
   }
 
   /* Map top, panel bottom */
-  #map-wrap { order: 1; overflow: hidden; }
+  #map-wrap { order: 1; overflow: hidden; flex: 1; min-height: 0; }
   #map      { height: 100%; }
-  #panel    { order: 2; }
+  #panel    { order: 2; flex-shrink: 0; }
 
   /* Show expand button */
   #map-expand-btn { display: block; }
@@ -591,8 +592,8 @@ let clickMode = null;
 // ── Map init ───────────────────────────────────────────────────────────────
 const map = L.map('map',{zoomControl:false}).setView([40.75,-73.97],12);
 L.control.zoom({position:'bottomright'}).addTo(map);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
-  attribution:'© OpenStreetMap © CARTO', maxZoom:19
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+  attribution:'© OpenStreetMap © CARTO', maxZoom:19, opacity:0.9
 }).addTo(map);
 map.on('zoomend moveend', () => map.invalidateSize());
 
