@@ -51,7 +51,7 @@ html, body { height: 100%; width: 100%; font-family: 'Syne', sans-serif;
   }
   #panel {
     padding: 0.9rem 1rem 0.8rem;
-    max-height: 42dvh;
+    max-height: 30dvh;
     border-right: none;
     border-bottom: 1px solid var(--border);
     overflow-y: auto;
